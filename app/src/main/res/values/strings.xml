@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Absensi Qr</string>
+
+    <string name="app_logo">Logo SMA Kartika Tama</string>
+    <string-array name="list_hari">
+        <item>Semua Hari</item>
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+    </string-array>
 </resources>

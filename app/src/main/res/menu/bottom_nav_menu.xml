@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_beranda" android:icon="@drawable/ic_home" android:title="Beranda" />
+    <item android:id="@+id/nav_absensi" android:icon="@drawable/ic_absensi" android:title="Absensi" />
+    <item android:id="@+id/nav_izin" android:icon="@drawable/ic_izin" android:title="Izin" />
+    <item android:id="@+id/nav_akun" android:icon="@drawable/ic_akun" android:title="Akun" />
+</menu>
