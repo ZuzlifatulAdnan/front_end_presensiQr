@@ -28,7 +28,8 @@ data class JadwalPelajaran(
     @SerializedName("jam_selesai") val jamSelesai: String,
     @SerializedName("mapel") val mapel: Mapel,
     @SerializedName("kelas") val kelas: Kelas,
-    @SerializedName("guru") val guru: Guru
+    @SerializedName("guru") val guru: Guru,
+    @SerializedName("tanggal_pertemuan") val tanggalPertemuan: String?
 )
 data class UserData(
     @SerializedName("name")
@@ -39,7 +40,7 @@ data class UserData(
 )
 // Model data pendukung yang berelasi
 data class Mapel(@SerializedName("nama") val nama: String)
-data class Kelas(@SerializedName("nama") val nama: String)
-data class Guru(@SerializedName("user") val user: UserInfo)
-data class UserInfo(@SerializedName("name") val name: String)
+//data class Kelas(@SerializedName("nama") val nama: String)
+//data class Guru(@SerializedName("user") val user: UserInfo)
+//data class UserInfo(@SerializedName("name") val name: String)
 data class Statistik(@SerializedName("jumlah_user") val jumlahUser: Int)

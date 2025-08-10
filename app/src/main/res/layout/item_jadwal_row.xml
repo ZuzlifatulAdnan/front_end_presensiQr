@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/table_row_bg"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_no"
+        style="@style/TableCell"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/tv_nama_guru"
+        style="@style/TableCell"
+        android:layout_width="150dp"
+        android:text="Nama Guru" />
+
+    <TextView
+        android:id="@+id/tv_mapel"
+        style="@style/TableCell"
+        android:layout_width="150dp"
+        android:text="Mata Pelajaran" />
+
+    <TextView
+        android:id="@+id/tv_kelas"
+        style="@style/TableCell"
+        android:layout_width="80dp"
+        android:gravity="center"
+        android:text="Kelas" />
+
+    <TextView
+        android:id="@+id/tv_hari"
+        style="@style/TableCell"
+        android:layout_width="80dp"
+        android:gravity="center"
+        android:text="Hari" />
+
+    <TextView
+        android:id="@+id/tv_jam"
+        style="@style/TableCell"
+        android:layout_width="120dp"
+        android:gravity="center"
+        android:text="Jam Mengajar" />
+
+    <LinearLayout
+        style="@style/TableCell"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_scan_qr"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_qr_scan" />
+
+        <ImageButton
+            android:id="@+id/btn_print"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_print" />
+    </LinearLayout>
+
+</TableRow>

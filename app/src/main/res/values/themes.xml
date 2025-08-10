@@ -20,4 +20,18 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="Theme.AbsensiQr" parent="Base.Theme.AbsensiQr" />
+    <style name="TableHeader">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TableCell">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:gravity">start|center_vertical</item>
+    </style>
 </resources>

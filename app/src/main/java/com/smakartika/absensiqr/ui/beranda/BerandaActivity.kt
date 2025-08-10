@@ -9,28 +9,49 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 import com.smakartika.absensiqr.R
-import com.smakartika.absensiqr.data.model.BerandaResponse
-import com.smakartika.absensiqr.data.model.User
 import com.smakartika.absensiqr.data.model.UserData
 import com.smakartika.absensiqr.databinding.ActivityBerandaBinding
 import com.smakartika.absensiqr.ui.absen.AbsenActivity
+import com.smakartika.absensiqr.ui.absen.JadwalTableAdapter
 import com.smakartika.absensiqr.ui.akun.AkunActivity
 import com.smakartika.absensiqr.ui.izin.IzinActivity
-import com.smakartika.absensiqr.data.remote.ApiClient
 
 class BerandaActivity : AppCompatActivity() {
+
 
     private lateinit var binding: ActivityBerandaBinding
     private val viewModel: BerandaViewModel by viewModels()
     private lateinit var jadwalAdapter: JadwalAdapter
-    private val apiHost = "10.0.2.2"
+    private var selectedJadwalId: Int? = null
+    private val apiHost = "192.168.1.6"
 
+    private val qrScannerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val intentResult: IntentResult? = IntentIntegrator.parseActivityResult(result.resultCode, result.data)
+        if (intentResult != null && intentResult.contents != null) {
+            val scannedData = intentResult.contents
+
+            // Saat ini kita punya ID Jadwal dan Data dari QR code
+            Toast.makeText(
+                this,
+                "Scan Berhasil!\nJadwal ID: $selectedJadwalId\nIsi QR: $scannedData",
+                Toast.LENGTH_LONG
+            ).show()
+
+        } else {
+            Toast.makeText(this, "Scan dibatalkan", Toast.LENGTH_SHORT).show()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBerandaBinding.inflate(layoutInflater)
@@ -122,7 +143,20 @@ class BerandaActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        jadwalAdapter = JadwalAdapter()
+        jadwalAdapter = JadwalAdapter { jadwalItem ->
+            // Simpan ID jadwal yang akan di-scan
+            selectedJadwalId = jadwalItem.id
+
+            // Konfigurasi dan mulai scanner
+            val integrator = IntentIntegrator(this)
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+            integrator.setPrompt("Arahkan kamera ke QR Code Presensi")
+            integrator.setCameraId(0)
+            integrator.setBeepEnabled(true)
+
+            // Jalankan scanner menggunakan launcher
+            qrScannerLauncher.launch(integrator.createScanIntent())
+        }
         binding.rvJadwal.apply {
             adapter = jadwalAdapter
             layoutManager = LinearLayoutManager(this@BerandaActivity)

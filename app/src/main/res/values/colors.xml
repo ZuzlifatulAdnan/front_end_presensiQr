@@ -21,4 +21,10 @@
     <color name="status_dibatalkan">#F44336</color> <!-- Red -->
     <color name="status_diterima">#03A9F4</color> <!-- Light Blue -->
     <color name="status_ditunda">#673AB7</color> <!-- Deep Purple -->
+
+    !-- TAMBAHKAN WARNA-WARNA INI UNTUK QR SCANNER -->
+    <color name="zxing_custom_possible_result_points">#9000ff00</color>
+    <color name="zxing_custom_result_view">#b0000000</color>
+    <color name="zxing_custom_viewfinder_laser">#ff00ff00</color>
+    <color name="zxing_custom_viewfinder_mask">#60000000</color>
 </resources>

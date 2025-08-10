@@ -2,7 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- PASTIKAN IZIN INI ADA -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Fitur kamera, tidak wajib tapi direkomendasikan -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +22,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AbsensiQr"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.absen.AbsenRekapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.absen.AbsenScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.akun.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.akun.EditAkunActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.izin.IzinActivity"
             android:exported="false" />
@@ -40,6 +58,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
