@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import com.journeyapps.barcodescanner.CaptureManager
 import com.smakartika.absensiqr.data.model.KelasDetail
 import com.smakartika.absensiqr.databinding.ActivityAbsenScanBinding
+import com.smakartika.absensiqr.ui.absen.AbsenSuksesActivity
 import com.smakartika.absensiqr.ui.absen.JadwalTableAdapter
 import com.smakartika.absensiqr.utils.Result
 
@@ -111,15 +112,9 @@ class AbsenScanActivity : AppCompatActivity() {
                     binding.btnAbsenSekarang.text = "Mengirim..."
                 }
                 is Result.Success -> {
-                    AlertDialog.Builder(this)
-                        .setTitle("Absen Berhasil")
-                        .setMessage(result.data)
-                        .setPositiveButton("OK") { dialog, _ ->
-                            dialog.dismiss()
-                            finish()
-                        }
-                        .setCancelable(false)
-                        .show()
+                    val intent = Intent(this, AbsenSuksesActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 is Result.Error -> {
                     binding.btnAbsenSekarang.isEnabled = true
@@ -144,12 +139,13 @@ class AbsenScanActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 Log.d("AbsenScanActivity", "Peta selesai dimuat.")
+                if (currentLat != null && currentLong != null) {
+                    updateUserMarkerOnMap(currentLat!!, currentLong!!)
+                }
             }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
-                val errorMessage = "Gagal memuat peta: ${error?.description}"
-                Log.e("AbsenScanActivity", errorMessage)
                 Toast.makeText(this@AbsenScanActivity, "Gagal memuat peta, periksa koneksi internet Anda.", Toast.LENGTH_LONG).show()
             }
         }
@@ -173,13 +169,33 @@ class AbsenScanActivity : AppCompatActivity() {
                 <script>
                     var map = L.map('map').setView([$kelasLat, $kelasLong], 16);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-                    L.marker([$kelasLat, $kelasLong]).addTo(map).bindPopup('<b>Lokasi Kelas</b>').openPopup();
+                    var kelasMarker = L.marker([$kelasLat, $kelasLong]).addTo(map).bindPopup('<b>Lokasi Kelas</b>').openPopup();
                     L.circle([$kelasLat, $kelasLong], { color: 'green', fillColor: '#0f0', fillOpacity: 0.3, radius: $radius }).addTo(map);
+                    
+                    var userMarker;
+                    function updateUserMarker(lat, lng) {
+                        if (userMarker) {
+                            map.removeLayer(userMarker);
+                        }
+                        var userIcon = L.icon({
+                            iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149060.png',
+                            iconSize: [25, 25],
+                            iconAnchor: [12, 12]
+                        });
+                        userMarker = L.marker([lat, lng], {icon: userIcon}).addTo(map).bindPopup("Lokasi Anda");
+                        var group = new L.featureGroup([kelasMarker, userMarker]);
+                        map.fitBounds(group.getBounds().pad(0.5));
+                    }
                 </script>
             </body>
             </html>
         """.trimIndent()
         binding.mapView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
+    }
+
+    private fun updateUserMarkerOnMap(lat: Double, long: Double) {
+        val jsCommand = "javascript:updateUserMarker($lat, $long);"
+        binding.mapView.evaluateJavascript(jsCommand, null)
     }
 
     private fun checkCameraPermission() {
@@ -273,6 +289,7 @@ class AbsenScanActivity : AppCompatActivity() {
                     currentLat = location.latitude
                     currentLong = location.longitude
                     Toast.makeText(this, "Lokasi berhasil didapatkan", Toast.LENGTH_SHORT).show()
+                    updateUserMarkerOnMap(location.latitude, location.longitude)
                 } else {
                     Toast.makeText(this, "Gagal mendapatkan lokasi. Silakan coba lagi.", Toast.LENGTH_LONG).show()
                 }

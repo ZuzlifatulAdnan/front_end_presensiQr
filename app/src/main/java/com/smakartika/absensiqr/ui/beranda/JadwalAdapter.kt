@@ -1,5 +1,6 @@
 package com.smakartika.absensiqr.ui.beranda
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,12 +8,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.smakartika.absensiqr.data.model.JadwalPelajaran
 import com.smakartika.absensiqr.databinding.ItemJadwalBinding
+import com.smakartika.absensiqr.ui.absen.AbsenScanActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class JadwalAdapter(
     private val onScanClicked: (JadwalPelajaran) -> Unit
 ) : ListAdapter<JadwalPelajaran, JadwalAdapter.JadwalViewHolder>(JadwalDiffCallback()) {
+
+    // Konstanta untuk key ID, agar konsisten
+    companion object {
+        const val EXTRA_JADWAL_ID = "EXTRA_JADWAL_ID"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JadwalViewHolder {
         val binding = ItemJadwalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,8 +40,17 @@ class JadwalAdapter(
             // 👇 GANTI LOGIKA INI: Tampilkan tanggal yang sudah diformat
             binding.tvTanggal.text = formatTanggal(jadwal.tanggalPertemuan)
 
+            // Logika untuk tombol Scan QR
             binding.btnScanQr.setOnClickListener {
-                onScanClicked(jadwal)
+                val context = it.context
+                // 1. Buat Intent untuk membuka AbsenScanActivity
+                val intent = Intent(context, AbsenScanActivity::class.java)
+
+                // 2. Masukkan ID jadwal ke dalam Intent
+                intent.putExtra(EXTRA_JADWAL_ID, jadwal.id)
+
+                // 3. Jalankan Activity
+                context.startActivity(intent)
             }
         }
     }

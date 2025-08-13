@@ -5,29 +5,44 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.smakartika.absensiqr.R
+import com.smakartika.absensiqr.data.local.SessionManager
+import com.smakartika.absensiqr.databinding.ActivitySplashBinding
 import com.smakartika.absensiqr.ui.auth.LoginActivity
+import com.smakartika.absensiqr.ui.beranda.BerandaActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    // Durasi splash screen dalam milidetik
-    private val SPLASH_TIME_OUT: Long = 3000 // 3 detik
+    private lateinit var binding: ActivitySplashBinding
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Sembunyikan ActionBar jika ada
-        supportActionBar?.hide()
+        sessionManager = SessionManager(this)
 
-        // Handler untuk menunda perpindahan ke MainActivity
+        // Gunakan Handler untuk memberi jeda sesaat sebelum pindah halaman
         Handler(Looper.getMainLooper()).postDelayed({
-            // Intent untuk memulai MainActivity
+            checkLoginStatus()
+        }, 2000) // Jeda 2 detik
+    }
+
+    private fun checkLoginStatus() {
+        // Ambil token dari SessionManager
+        val token = sessionManager.fetchAuthToken()
+
+        if (token.isNullOrEmpty()) {
+            // Jika token tidak ada, pergi ke Halaman Login
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        } else {
+            // Jika token ada, pergi ke Halaman Beranda
+            val intent = Intent(this, BerandaActivity::class.java)
+            startActivity(intent)
+        }
 
-            // Tutup SplashActivity agar tidak bisa kembali dengan tombol back
-            finish()
-        }, SPLASH_TIME_OUT)
+        // Tutup SplashActivity agar tidak bisa kembali ke sini
+        finish()
     }
 }

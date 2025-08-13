@@ -86,7 +86,7 @@ class AkunActivity : AppCompatActivity() {
         // Header
         binding.tvNamaHeader.text = user.name
 //        binding.tvRoleHeader.text = user.role
-        val imageUrl = "http://192.168.1.6:8000/img/user/${user.image}" // Ganti dengan IP Anda
+        val imageUrl = "http://192.168.1.11:8000/img/user/${user.image}" // Ganti dengan IP Anda
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.ic_person_placeholder)

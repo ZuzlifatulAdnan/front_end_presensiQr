@@ -105,7 +105,7 @@ class EditAkunActivity : AppCompatActivity() {
     private fun populateData(user: User) {
         binding.etName.setText(user.name)
         binding.etEmail.setText(user.email)
-        val imageUrl = "http://192.168.1.6:8000/img/user/${user.image}"
+        val imageUrl = "http://192.168.1.11:8000/img/user/${user.image}"
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.ic_person_placeholder)

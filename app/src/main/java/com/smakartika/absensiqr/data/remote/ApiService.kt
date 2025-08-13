@@ -11,6 +11,7 @@ import com.smakartika.absensiqr.data.model.Kelas
 import com.smakartika.absensiqr.data.model.LoginRequest
 import com.smakartika.absensiqr.data.model.LoginResponse
 import com.smakartika.absensiqr.data.model.ProfileResponse
+import com.smakartika.absensiqr.data.model.RekapAbsenResponse
 import com.smakartika.absensiqr.data.model.ScanFormDataResponse
 import com.smakartika.absensiqr.data.model.UpdateProfileResponse
 import retrofit2.http.Body
@@ -61,4 +62,6 @@ interface ApiService {
     suspend fun getScanFormData(): Response<ScanFormDataResponse>
     @POST("api/absen/scan")
     suspend fun submitScan(@Body request: AbsenScanRequest): Response<AbsenScanResponse>
+    @GET("api/absen/{id}/rekap")
+    suspend fun getRekapAbsen(@Path("id") jadwalId: Int): Response<RekapAbsenResponse>
 }

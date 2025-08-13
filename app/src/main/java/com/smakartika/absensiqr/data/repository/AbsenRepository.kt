@@ -12,4 +12,5 @@ class AbsenRepository(context: Context) {
         apiService.getJadwalAbsen(page, searchQuery, hari)
     suspend fun getScanFormData() = apiService.getScanFormData()
     suspend fun submitScan(request: AbsenScanRequest) = apiService.submitScan(request)
+    suspend fun getRekapAbsen(jadwalId: Int) = apiService.getRekapAbsen(jadwalId)
 }

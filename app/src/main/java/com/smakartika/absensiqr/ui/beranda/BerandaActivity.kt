@@ -32,7 +32,6 @@ class BerandaActivity : AppCompatActivity() {
     private val viewModel: BerandaViewModel by viewModels()
     private lateinit var jadwalAdapter: JadwalAdapter
     private var selectedJadwalId: Int? = null
-    private val apiHost = "192.168.1.6"
 
     private val qrScannerLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -89,8 +88,8 @@ class BerandaActivity : AppCompatActivity() {
             binding.tvGreeting.text = "Hi, ${userData.name}"
             Glide.with(this).load(userData.imageUrl)
                 .circleCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
+                .placeholder(R.drawable.ic_person_placeholder) // Diubah
+                .error(R.drawable.ic_person_placeholder)      // Diubah
                 .into(binding.ivProfile)
         }
     }

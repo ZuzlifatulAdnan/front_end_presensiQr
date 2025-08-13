@@ -4,9 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-// --- DATA MODELS UNTUK API PROFILE ---
-
-// Wrapper utama untuk response GET /api/profile
 @Parcelize
 data class ProfileResponse(
     val success: Boolean,
@@ -35,7 +32,8 @@ data class Siswa(
     @SerializedName("no_telepon")
     val noTelepon: String?,
     val kelas: Kelas?,
-    val ortu: Ortu?
+    val ortu: Ortu?,
+    @SerializedName("user") val user: UserInfo?
 ) : Parcelable
 
 @Parcelize

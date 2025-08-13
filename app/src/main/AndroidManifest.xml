@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- PASTIKAN IZIN INI ADA -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Fitur kamera, tidak wajib tapi direkomendasikan -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Fitur kamera, tidak wajib tapi direkomendasikan -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AbsensiQr"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.absen.AbsenSuksesActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.absen.AbsenRekapActivity"
             android:exported="false" />
