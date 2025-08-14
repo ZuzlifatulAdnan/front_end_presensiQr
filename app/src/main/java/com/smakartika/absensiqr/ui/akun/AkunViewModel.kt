@@ -2,6 +2,8 @@ package com.smakartika.absensiqr.ui.akun
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -41,21 +43,20 @@ class AkunViewModel(application: Application) : AndroidViewModel(application) {
     // Fungsi untuk menyalin file dari Uri ke cache aplikasi
     private fun getFileFromUri(context: Context, uri: Uri): File? {
         val contentResolver = context.contentResolver
-        // Buat file sementara di direktori cache
-        val tempFile = File.createTempFile("upload_temp_", ".jpg", context.cacheDir)
+        val tempFile = File.createTempFile("profile_pic_", ".jpg", context.cacheDir)
         tempFile.deleteOnExit()
 
         try {
-            val inputStream = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(tempFile)
-            inputStream?.use { input ->
-                outputStream.use { output ->
-                    input.copyTo(output)
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                FileOutputStream(tempFile).use { outputStream ->
+                    // Kompres bitmap ke format JPEG dengan kualitas 80%
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream)
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return null // Kembalikan null jika terjadi error
+            return null
         }
         return tempFile
     }

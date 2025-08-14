@@ -22,6 +22,15 @@
         android:theme="@style/Theme.AbsensiQr"
         tools:targetApi="31">
         <activity
+            android:name=".ui.izin.IzinSuksesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.izin.DetailIzinActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.izin.InputIzinActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.absen.AbsenSuksesActivity"
             android:exported="false" />
         <activity

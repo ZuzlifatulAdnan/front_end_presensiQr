@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/table_row_bg"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_nomor"
+        style="@style/TableCell"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:text="1" />
+
+    <TextView
+        android:id="@+id/tv_nama_siswa"
+        style="@style/TableCell"
+        android:layout_width="200dp"
+        android:text="Nama Siswa" />
+
+    <TextView
+        android:id="@+id/tv_kelas"
+        style="@style/TableCell"
+        android:layout_width="100dp"
+        android:gravity="center"
+        android:text="Kelas" />
+
+    <TextView
+        android:id="@+id/tv_tanggal"
+        style="@style/TableCell"
+        android:layout_width="120dp"
+        android:gravity="center"
+        android:text="01-01-2025" />
+
+    <ImageButton
+        android:id="@+id/btn_detail"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Lihat Detail"
+        android:src="@drawable/ic_visibility" />
+
+</TableRow>

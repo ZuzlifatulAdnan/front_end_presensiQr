@@ -14,6 +14,9 @@ import com.smakartika.absensiqr.data.model.ProfileResponse
 import com.smakartika.absensiqr.data.model.RekapAbsenResponse
 import com.smakartika.absensiqr.data.model.ScanFormDataResponse
 import com.smakartika.absensiqr.data.model.UpdateProfileResponse
+import com.smakartika.absensiqr.data.model.IzinDetailResponse
+import com.smakartika.absensiqr.data.model.IzinListResponse
+import com.smakartika.absensiqr.data.model.IzinStoreResponse
 import retrofit2.http.Body
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -64,4 +67,21 @@ interface ApiService {
     suspend fun submitScan(@Body request: AbsenScanRequest): Response<AbsenScanResponse>
     @GET("api/absen/{id}/rekap")
     suspend fun getRekapAbsen(@Path("id") jadwalId: Int): Response<RekapAbsenResponse>
+    // --- IZIN ---
+    @GET("api/izin")
+    suspend fun getIzinList(
+        @Query("page") page: Int,
+        @Query("tanggal") tanggal: String?,
+        @Query("search") search: String?
+    ): Response<IzinListResponse>
+
+    @Multipart
+    @POST("api/izin")
+    suspend fun storeIzin(
+        @PartMap fields: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part bukti_surat: MultipartBody.Part
+    ): Response<IzinStoreResponse>
+
+    @GET("api/izin/{id}")
+    suspend fun getIzinDetail(@Path("id") izinId: Int): Response<IzinDetailResponse>
 }

@@ -20,6 +20,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.smakartika.absensiqr.R
 import com.smakartika.absensiqr.data.model.User
+import com.smakartika.absensiqr.data.remote.ApiClient
 import com.smakartika.absensiqr.databinding.ActivityEditAkunBinding
 import com.smakartika.absensiqr.utils.Result
 import java.io.File
@@ -105,7 +106,7 @@ class EditAkunActivity : AppCompatActivity() {
     private fun populateData(user: User) {
         binding.etName.setText(user.name)
         binding.etEmail.setText(user.email)
-        val imageUrl = "http://192.168.1.11:8000/img/user/${user.image}"
+        val imageUrl = "${ApiClient.BASE_URL}img/user/${user.image}"
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.ic_person_placeholder)

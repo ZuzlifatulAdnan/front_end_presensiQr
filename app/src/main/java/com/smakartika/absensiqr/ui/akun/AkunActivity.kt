@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.smakartika.absensiqr.R
 import com.smakartika.absensiqr.data.local.SessionManager
 import com.smakartika.absensiqr.data.model.User
+import com.smakartika.absensiqr.data.remote.ApiClient
 import com.smakartika.absensiqr.databinding.ActivityAkunBinding
 import com.smakartika.absensiqr.ui.absen.AbsenActivity
 import com.smakartika.absensiqr.ui.beranda.BerandaActivity
@@ -86,7 +87,7 @@ class AkunActivity : AppCompatActivity() {
         // Header
         binding.tvNamaHeader.text = user.name
 //        binding.tvRoleHeader.text = user.role
-        val imageUrl = "http://192.168.1.11:8000/img/user/${user.image}" // Ganti dengan IP Anda
+        val imageUrl = "${ApiClient.BASE_URL}img/user/${user.image}" // Ganti dengan IP Anda
         Glide.with(this)
             .load(imageUrl)
             .placeholder(R.drawable.ic_person_placeholder)
